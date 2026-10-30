@@ -23,28 +23,28 @@ const LOGO = B + 'images/logo.jpg';
 // Harga dalam rupiah per hari. Ubah di sini jika ada perubahan tarif.
 const FLEET: CarUnit[] = [
   {
-    id: 'innova', name: 'Toyota Kijang Innova', category: 'family', image: '/images/innova.jpg', pos: '50% 31%',
+    id: 'innova', name: 'Toyota Kijang Innova', category: 'family', image: `${import.meta.env.BASE_URL}images/innova.jpg`, pos: '50% 31%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin / Diesel', priceDriver: 700000, priceSelfDrive: 500000, popular: true,
     features: ['AC Double Blower', 'Nyaman Rute Jauh', 'Kabin Luas', 'Cocok Keluarga']
   },
   {
-    id: 'avanza', name: 'Toyota Avanza', category: 'family', image: '/images/hiace-1.jpg', pos: '0% 50%', zoom: 1.9,
+    id: 'avanza', name: 'Toyota Avanza', category: 'family', image: `${import.meta.env.BASE_URL}images/avanza.jpg`, pos: '0% 50%', zoom: 1.9,
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000, popular: true,
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
   {
-    id: 'rush', name: 'Toyota Rush', category: 'family', image: '/images/sigra.jpg', pos: '50% 58%',
+    id: 'rush', name: 'Toyota Rush', category: 'family', image: `${import.meta.env.BASE_URL}images/rush.jpg`, pos: '50% 58%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 550000, priceSelfDrive: 350000,
     features: ['Ground Clearance Tinggi', 'Nyaman Medan Berkelok', 'Irit BBM', 'Cocok Wisata']
   },
 
   {
-    id: 'fortuner', name: 'Toyota Fortuner', category: 'premium', image: '/images/fortuner.jpg', pos: '50% 40%',
+    id: 'fortuner', name: 'Toyota Fortuner', category: 'premium', image: `${import.meta.env.BASE_URL}images/fortuner.jpg`, pos: '50% 40%',
     capacity: 7, transmission: 'Automatic', fuel: 'Diesel', priceDriver: 1400000, allIn: true,
     features: ['Suspensi Nyaman', 'Interior Mewah', 'Gagah & Elegan', 'Paket All-In (Mobil+Sopir+BBM)']
   },
   {
-    id: 'hiace', name: 'Toyota HiAce', category: 'group', image: '/images/hiace-2.jpg', pos: '50% 40%',
+    id: 'hiace', name: 'Toyota HiAce', category: 'group', image: `${import.meta.env.BASE_URL}images/hiace-2.jpg`, pos: '50% 40%',
     capacity: 14, transmission: 'Manual', fuel: 'Diesel', priceDriver: 1500000, allIn: true, popular: true,
     features: ['Kapasitas Besar', 'Kabin Luas & Tinggi', 'Cocok Rombongan', 'Paket All-In (Mobil+Sopir+BBM)']
   },
