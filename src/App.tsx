@@ -11,38 +11,42 @@ interface CarUnit {
   priceDriver: number; priceSelfDrive?: number; allIn?: boolean; popular?: boolean; features: string[];
 }
 
-const B = import.meta.env.BASE_URL;
 const PHONE_NUMBER = '6282272055155';
 const PHONE_DISPLAY = '0822-7205-5155';
 const ADDRESS = 'Jl. PK Hepata No. 4, Simpang Sirongit';
 const MAP_QUERY = encodeURIComponent('Jl. Pk Hepata No. 4 Simpang Sirongit, Tapanuli Utara');
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 const GOOGLE_MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
-const LOGO = B + 'images/logo.jpg';
+const LOGO = '/images/logo.jpg';
 
 // Harga dalam rupiah per hari. Ubah di sini jika ada perubahan tarif.
 const FLEET: CarUnit[] = [
-  { id: 'innova', name: 'Toyota Kijang Innova', category: 'family', image: B + 'images/innova.jpg', pos: '50% 31%',
+  {
+    id: 'innova', name: 'Toyota Kijang Innova', category: 'family', image: '/images/innova.jpg', pos: '50% 31%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin / Diesel', priceDriver: 700000, priceSelfDrive: 500000, popular: true,
-    features: ['AC Double Blower', 'Nyaman Rute Jauh', 'Kabin Luas', 'Cocok Keluarga'] },
-  { id: 'avanza', name: 'Toyota Avanza', category: 'family', image: B + 'images/hiace-1.jpg', pos: '0% 50%', zoom: 1.9,
+    features: ['AC Double Blower', 'Nyaman Rute Jauh', 'Kabin Luas', 'Cocok Keluarga']
+  },
+  {
+    id: 'avanza', name: 'Toyota Avanza', category: 'family', image: '/images/hiace-1.jpg', pos: '0% 50%', zoom: 1.9,
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000, popular: true,
-    features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat'] },
-  { id: 'rush', name: 'Toyota Rush', category: 'family',
+    features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
+  },
+  {
+    id: 'rush', name: 'Toyota Rush', category: 'family', image: '/images/sigra.jpg', pos: '50% 58%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 550000, priceSelfDrive: 350000,
-    features: ['Ground Clearance Tinggi', 'Nyaman Medan Berkelok', 'Irit BBM', 'Cocok Wisata'] },
-  { id: 'sigra', name: 'Daihatsu Sigra', category: 'family', image: B + 'images/sigra.jpg', pos: '50% 58%',
-    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000,
-    features: ['Sangat Irit', 'Mudah Parkir', 'Ekonomis', 'Cocok Dalam Kota'] },
-  { id: 'fortuner', name: 'Toyota Fortuner', category: 'premium',
+    features: ['Ground Clearance Tinggi', 'Nyaman Medan Berkelok', 'Irit BBM', 'Cocok Wisata']
+  },
+
+  {
+    id: 'fortuner', name: 'Toyota Fortuner', category: 'premium', image: '/images/fortuner.jpg', pos: '50% 40%',
     capacity: 7, transmission: 'Automatic', fuel: 'Diesel', priceDriver: 1400000, allIn: true,
-    features: ['Suspensi Nyaman', 'Interior Mewah', 'Gagah & Elegan', 'Paket All-In'] },
-  { id: 'hiace', name: 'Toyota HiAce', category: 'group', image: B + 'images/hiace-2.jpg', pos: '50% 60%',
+    features: ['Suspensi Nyaman', 'Interior Mewah', 'Gagah & Elegan', 'Paket All-In (Mobil+Sopir+BBM)']
+  },
+  {
+    id: 'hiace', name: 'Toyota HiAce', category: 'group', image: '/images/hiace-2.jpg', pos: '50% 40%',
     capacity: 14, transmission: 'Manual', fuel: 'Diesel', priceDriver: 1500000, allIn: true, popular: true,
-    features: ['Kapasitas Besar', 'Kabin Luas & Tinggi', 'Cocok Rombongan', 'Paket All-In'] },
-  { id: 'hiace-premio', name: 'Toyota HiAce Premio', category: 'group', image: B + 'images/hiace-1.jpg', pos: '85% 50%',
-    capacity: 14, transmission: 'Manual', fuel: 'Diesel', priceDriver: 1500000, allIn: true,
-    features: ['Tampilan Premium', 'AC Menyeluruh', 'Cocok Tour Wisata', 'Paket All-In'] },
+    features: ['Kapasitas Besar', 'Kabin Luas & Tinggi', 'Cocok Rombongan', 'Paket All-In (Mobil+Sopir+BBM)']
+  },
 ];
 
 const ROUTES: [string, number][] = [
@@ -102,12 +106,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-400 selection:text-slate-900 pb-20 md:pb-0">
       {/* TOP BAR */}
-      <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-          <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-amber-400" />{ADDRESS}</span>
-          <a href={`tel:+${PHONE_NUMBER}`} className="hover:text-amber-400 flex items-center gap-1"><Phone className="w-3 h-3 text-emerald-400" />{PHONE_DISPLAY}</a>
-        </div>
-      </div>
+
 
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -142,19 +141,19 @@ export default function App() {
 
       {/* HERO */}
       <section className="relative bg-slate-900 text-white overflow-hidden">
-        <img src={B + 'images/hiace-2.jpg'} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
+        <img src="/images/hiace-2.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-900/60 z-10" />
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />Rental Mobil &amp; Tour · Simpang Sirongit
+                <Sparkles className="w-3.5 h-3.5" />Rental Mobil &amp; Tour · Silangit
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
                 Sewa Mobil Aman, Nyaman &amp; Terpercaya Bersama <span className="text-amber-400">Aldo Rent Car</span>
               </h1>
               <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-                Solusi transportasi di Simpang Sirongit &amp; sekitarnya. Pilih Lepas Kunci atau dengan Sopir untuk wisata Danau Toba, urusan dinas, hingga acara keluarga.
+                Solusi transportasi di Silangit &amp; sekitarnya. Pilih Lepas Kunci atau dengan Sopir untuk wisata Danau Toba, urusan dinas, hingga acara keluarga.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-sm text-slate-200">
                 {['Kondisi Mobil Prima', 'Bisa Lepas Kunci', 'Sopir Hafal Rute', 'Harga Transparan', 'Paket All-In', 'Antar - Jemput Mudah'].map((t) => (
@@ -285,8 +284,8 @@ export default function App() {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Mengapa Memilih Aldo Rent Car?</h2>
             <p className="text-slate-600">Kami berkomitmen memberikan layanan sewa kendaraan yang jujur dan mengutamakan kenyamanan pelanggan.</p>
             {[[ShieldCheck, 'Unit Terawat & Bersih', 'Kendaraan dicek dan dibersihkan sebelum diserahkan.'],
-              [UserCheck, 'Driver Ramah & Paham Rute', 'Sopir lokal yang hafal jalur Toba, Samosir, hingga Sibolga.'],
-              [Sparkles, 'Harga Jelas', 'Tarif disepakati di awal, tanpa biaya yang mengejutkan.']].map(([I, t, d]) => {
+            [UserCheck, 'Driver Ramah & Paham Rute', 'Sopir lokal yang hafal jalur Toba, Samosir, hingga Sibolga.'],
+            [Sparkles, 'Harga Jelas', 'Tarif disepakati di awal, tanpa biaya yang mengejutkan.']].map(([I, t, d]) => {
               const Icon = I as typeof Car;
               return (
                 <div key={t as string} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
@@ -383,8 +382,8 @@ export default function App() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center mb-10">Pertanyaan Sering Diajukan</h2>
           <div className="space-y-4">
             {[['Apa syarat sewa mobil lepas kunci?', 'Hubungi kami via WhatsApp untuk syarat dan proses verifikasi yang berlaku.'],
-              ['Apakah harga sewa dengan sopir sudah termasuk BBM?', 'Paket All-In (HiAce dan Fortuner) sudah termasuk mobil, sopir, dan BBM. Untuk mobil lain, BBM mengikuti kesepakatan saat booking.'],
-              ['Bisakah dijemput di Bandara Silangit?', 'Bisa. Kabari jadwal penerbangan Anda lewat WhatsApp.']].map(([q, a]) => (
+            ['Apakah harga sewa dengan sopir sudah termasuk BBM?', 'Paket All-In (HiAce dan Fortuner) sudah termasuk mobil, sopir, dan BBM. Untuk mobil lain, BBM mengikuti kesepakatan saat booking.'],
+            ['Bisakah dijemput di Bandara Silangit?', 'Bisa. Kabari jadwal penerbangan Anda lewat WhatsApp.']].map(([q, a]) => (
               <div key={q} className="bg-white p-5 rounded-2xl border border-slate-200">
                 <h4 className="font-bold text-slate-900 flex items-center gap-2"><HelpCircle className="w-4 h-4 text-amber-500" />{q}</h4>
                 <p className="text-slate-600 text-sm mt-2 pl-6">{a}</p>
@@ -400,7 +399,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center gap-3"><Logo size="h-10" /><div className="font-extrabold text-lg text-white">ALDO RENT CAR <span className="text-amber-400">&amp; TOUR</span></div></div>
-              <p className="text-sm max-w-sm">Penyedia jasa rental mobil di Simpang Sirongit &amp; sekitarnya.</p>
+              <p className="text-sm max-w-sm">Penyedia jasa rental mobil di Silangit &amp; sekitarnya.</p>
             </div>
             <div>
               <h4 className="text-white font-bold text-sm mb-4">Navigasi Cepat</h4>
