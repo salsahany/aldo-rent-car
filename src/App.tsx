@@ -11,13 +11,14 @@ interface CarUnit {
   priceDriver: number; priceSelfDrive?: number; allIn?: boolean; popular?: boolean; features: string[];
 }
 
+const B = import.meta.env.BASE_URL;
 const PHONE_NUMBER = '6282272055155';
 const PHONE_DISPLAY = '0822-7205-5155';
 const ADDRESS = 'Jl. PK Hepata No. 4, Simpang Sirongit';
 const MAP_QUERY = encodeURIComponent('Jl. Pk Hepata No. 4 Simpang Sirongit, Tapanuli Utara');
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 const GOOGLE_MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
-const LOGO = '/images/logo.jpg';
+const LOGO = B + 'images/logo.jpg';
 
 // Harga dalam rupiah per hari. Ubah di sini jika ada perubahan tarif.
 const FLEET: CarUnit[] = [
@@ -141,7 +142,7 @@ export default function App() {
 
       {/* HERO */}
       <section className="relative bg-slate-900 text-white overflow-hidden">
-        <img src="/images/hiace-2.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
+        <img src={B + 'images/hiace-2.jpg'} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-900/60 z-10" />
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
