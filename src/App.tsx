@@ -11,40 +11,47 @@ interface CarUnit {
   priceDriver: number; priceSelfDrive?: number; allIn?: boolean; popular?: boolean; features: string[];
 }
 
-const B = import.meta.env.BASE_URL;
 const PHONE_NUMBER = '6282272055155';
 const PHONE_DISPLAY = '0822-7205-5155';
 const ADDRESS = 'Jl. PK Hepata No. 4, Simpang Sirongit';
 const MAP_QUERY = encodeURIComponent('Jl. Pk Hepata No. 4 Simpang Sirongit, Tapanuli Utara');
-const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
-const GOOGLE_MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
-const LOGO = B + 'images/logo.jpg';
+const LOCATIONS = [
+  { name: 'Lokasi 1 · Laguboti', address: '945M+Q79, Ompu Raja Hutapea, Kec. Laguboti, Kabupaten Toba, Sumatera Utara 22381' },
+  { name: 'Lokasi 2 · Silando', address: '7X7Q+628 Silando, Kabupaten Tapanuli Utara, Sumatera Utara' },
+];
+const mapEmbed = (a: string) => `https://www.google.com/maps?q=${encodeURIComponent(a)}&output=embed`;
+const mapRoute = (a: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(a)}`;
+const LOGO = '/images/logo.jpg';
 
 // Harga dalam rupiah per hari. Ubah di sini jika ada perubahan tarif.
 const FLEET: CarUnit[] = [
   {
-    id: 'innova', name: 'Toyota Kijang Innova', category: 'family', image: `${import.meta.env.BASE_URL}images/innova.jpg`, pos: '50% 31%',
+    id: 'innova', name: 'Innova Reborn', category: 'family', image: '/images/innova.jpg', pos: '50% 31%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin / Diesel', priceDriver: 700000, priceSelfDrive: 500000, popular: true,
     features: ['AC Double Blower', 'Nyaman Rute Jauh', 'Kabin Luas', 'Cocok Keluarga']
   },
   {
-    id: 'avanza', name: 'Toyota Avanza', category: 'family', image: `${import.meta.env.BASE_URL}images/avanza.jpg`, pos: '0% 50%', zoom: 1.9,
+    id: 'avanza', name: 'Avanza Veloz', category: 'family', image: '/images/avanza.jpeg', pos: '50% 30%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000, popular: true,
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
   {
-    id: 'rush', name: 'Toyota Rush', category: 'family', image: `${import.meta.env.BASE_URL}images/rush.jpg`, pos: '50% 58%',
-    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 550000, priceSelfDrive: 350000,
-    features: ['Ground Clearance Tinggi', 'Nyaman Medan Berkelok', 'Irit BBM', 'Cocok Wisata']
+    id: 'rush', name: 'Toyota Rush', category: 'premium', image: '/images/rush.jpg', pos: '50% 40%',
+    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000,
+    features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
-
   {
-    id: 'fortuner', name: 'Toyota Fortuner', category: 'premium', image: `${import.meta.env.BASE_URL}images/fortuner.jpg`, pos: '50% 40%',
+    id: 'rush', name: 'Daihatsu Terios', category: 'premium', image: '/images/sigra.jpg', pos: '50% 60%',
+    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000,
+    features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
+  },
+  {
+    id: 'fortuner', name: 'Toyota Fortuner', category: 'premium', image: '/images/fortuner.jpg', pos: '50% 40%',
     capacity: 7, transmission: 'Automatic', fuel: 'Diesel', priceDriver: 1400000, allIn: true,
     features: ['Suspensi Nyaman', 'Interior Mewah', 'Gagah & Elegan', 'Paket All-In (Mobil+Sopir+BBM)']
   },
   {
-    id: 'hiace', name: 'Toyota HiAce', category: 'group', image: `${import.meta.env.BASE_URL}images/hiace-2.jpg`, pos: '50% 40%',
+    id: 'hiace', name: 'Toyota HiAce', category: 'group', image: '/images/hiace-2.jpg', pos: '50% 40%',
     capacity: 14, transmission: 'Manual', fuel: 'Diesel', priceDriver: 1500000, allIn: true, popular: true,
     features: ['Kapasitas Besar', 'Kabin Luas & Tinggi', 'Cocok Rombongan', 'Paket All-In (Mobil+Sopir+BBM)']
   },
@@ -96,13 +103,14 @@ export default function App() {
   const [calcCar, setCalcCar] = useState(FLEET[0].id);
   const [calcService, setCalcService] = useState<'driver' | 'self'>('driver');
   const [days, setDays] = useState(1);
+  const [loc, setLoc] = useState(0);
 
-  const genericWa = waLink('Halo Aldo Rent Car (ARC Travel & Tour), saya ingin bertanya mengenai ketersediaan dan daftar harga sewa mobil.');
+  const genericWa = waLink('Halo Aldho Rent Car (ARC Travel & Tour), saya ingin bertanya mengenai ketersediaan dan daftar harga sewa mobil.');
   const cars = useMemo(() => (cat === 'all' ? FLEET : FLEET.filter((c) => c.category === cat)), [cat]);
   const cc = useMemo(() => FLEET.find((c) => c.id === calcCar) || FLEET[0], [calcCar]);
   const service = cc.priceSelfDrive ? calcService : 'driver';
   const total = (service === 'driver' ? cc.priceDriver : cc.priceSelfDrive!) * days;
-  const calcWa = waLink(`Halo Aldo Rent Car, saya ingin booking:\n\n- Unit: ${cc.name}\n- Layanan: ${service === 'driver' ? (cc.allIn ? 'All-In (mobil, sopir, BBM)' : 'Dengan Sopir') : 'Lepas Kunci'}\n- Durasi: ${days} Hari\n- Est. Total: ${rp(total)}\n\nApakah unit ini ready? Terima kasih.`);
+  const calcWa = waLink(`Halo Aldho Rent Car, saya ingin booking:\n\n- Unit: ${cc.name}\n- Layanan: ${service === 'driver' ? (cc.allIn ? 'All-In (mobil, sopir, BBM)' : 'Dengan Sopir') : 'Lepas Kunci'}\n- Durasi: ${days} Hari\n- Est. Total: ${rp(total)}\n\nApakah unit ini ready? Terima kasih.`);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-400 selection:text-slate-900 pb-20 md:pb-0">
@@ -115,7 +123,7 @@ export default function App() {
           <a href="#" className="flex items-center gap-3">
             <Logo />
             <div>
-              <div className="font-extrabold text-xl tracking-tight text-slate-900 leading-none">ALDO <span className="text-amber-500">RENT CAR</span></div>
+              <div className="font-extrabold text-xl tracking-tight text-slate-900 leading-none">ALDHO <span className="text-amber-500">RENT CAR</span></div>
               <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mt-0.5">ARC Travel &amp; Tour</div>
             </div>
           </a>
@@ -142,7 +150,7 @@ export default function App() {
 
       {/* HERO */}
       <section className="relative bg-slate-900 text-white overflow-hidden">
-        <img src={B + 'images/hiace-2.jpg'} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
+        <img src="/images/hiace-2.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-900/60 z-10" />
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -151,7 +159,7 @@ export default function App() {
                 <Sparkles className="w-3.5 h-3.5" />Rental Mobil &amp; Tour · Silangit
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
-                Sewa Mobil Aman, Nyaman &amp; Terpercaya Bersama <span className="text-amber-400">Aldo Rent Car</span>
+                Sewa Mobil Aman, Nyaman &amp; Terpercaya Bersama <span className="text-amber-400">Aldho Rent Car</span>
               </h1>
               <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
                 Solusi transportasi di Silangit &amp; sekitarnya. Pilih Lepas Kunci atau dengan Sopir untuk wisata Danau Toba, urusan dinas, hingga acara keluarga.
@@ -162,7 +170,7 @@ export default function App() {
                 ))}
               </div>
               <div className="pt-4 flex flex-col sm:flex-row gap-4">
-                <a href={waLink('Halo Aldo Rent Car, saya mau tanya stok mobil yang ready.')} target="_blank" rel="noopener noreferrer"
+                <a href={waLink('Halo Aldho Rent Car, saya mau tanya stok mobil yang ready.')} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-7 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
                   <MessageCircle className="w-5 h-5 fill-current" />Booking Cepat via WA
                 </a>
@@ -181,7 +189,7 @@ export default function App() {
                 <form className="space-y-4" onSubmit={(e) => {
                   e.preventDefault();
                   const f = new FormData(e.currentTarget);
-                  window.open(waLink(`Halo Aldo Rent Car, nama saya ${f.get('fullname')}.\n\nSaya ingin memesan:\n- Mobil: ${f.get('car_type')}\n- Layanan: ${f.get('rental_type')}\n- Tanggal: ${f.get('start_date') || 'Segera'}\n\nMohon konfirmasi ketersediaan. Terima kasih.`), '_blank');
+                  window.open(waLink(`Halo Aldho Rent Car, nama saya ${f.get('fullname')}.\n\nSaya ingin memesan:\n- Mobil: ${f.get('car_type')}\n- Layanan: ${f.get('rental_type')}\n- Tanggal: ${f.get('start_date') || 'Segera'}\n\nMohon konfirmasi ketersediaan. Terima kasih.`), '_blank');
                 }}>
                   <div><label className={labelCls}>Nama Anda</label><input name="fullname" required placeholder="Contoh: Budi Santoso" className={inputCls} /></div>
                   <div><label className={labelCls}>Pilihan Unit Mobil</label>
@@ -246,7 +254,7 @@ export default function App() {
                       </div>
                     )}
                   </div>
-                  <a href={waLink(`Halo Aldo Rent Car, saya tertarik menyewa ${car.name}. Boleh minta info ketersediaan?`)} target="_blank" rel="noopener noreferrer"
+                  <a href={waLink(`Halo Aldho Rent Car, saya tertarik menyewa ${car.name}. Boleh minta info ketersediaan?`)} target="_blank" rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all shadow">
                     <MessageCircle className="w-4 h-4 fill-current" />Pesan Unit Ini
                   </a>
@@ -282,7 +290,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 space-y-6">
             <div className="text-amber-600 font-bold text-sm tracking-widest uppercase">Keunggulan Utama</div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Mengapa Memilih Aldo Rent Car?</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Mengapa Memilih Aldho Rent Car?</h2>
             <p className="text-slate-600">Kami berkomitmen memberikan layanan sewa kendaraan yang jujur dan mengutamakan kenyamanan pelanggan.</p>
             {[[ShieldCheck, 'Unit Terawat & Bersih', 'Kendaraan dicek dan dibersihkan sebelum diserahkan.'],
             [UserCheck, 'Driver Ramah & Paham Rute', 'Sopir lokal yang hafal jalur Toba, Samosir, hingga Sibolga.'],
@@ -346,32 +354,37 @@ export default function App() {
       </section>
 
       {/* LOKASI */}
+      {/* LOKASI */}
       <section id="lokasi" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="text-amber-600 font-bold text-sm tracking-widest uppercase mb-1">Lokasi Kami</div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Kunjungi Garasi &amp; Kantor Kami</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Temukan Kami di Peta</h2>
+            <p className="mt-2 text-slate-600">Pilih lokasi untuk melihat titiknya di peta.</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-5 bg-slate-50 p-8 rounded-3xl border border-slate-200 flex flex-col justify-between gap-6">
-              <div className="space-y-6">
-                <h3 className="text-xl font-bold text-slate-900">Informasi Kontak &amp; Alamat</h3>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center flex-shrink-0"><MapPin className="w-5 h-5" /></div>
-                  <div><h4 className="font-bold text-sm">Alamat Garasi / Office</h4><p className="text-slate-600 text-sm">{ADDRESS}</p></div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0"><Phone className="w-5 h-5" /></div>
-                  <div><h4 className="font-bold text-sm">Telepon / WhatsApp</h4>
-                    <a href={`tel:+${PHONE_NUMBER}`} className="text-emerald-700 font-bold hover:underline block">{PHONE_DISPLAY}</a></div>
-                </div>
+            <div className="lg:col-span-5 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200 flex flex-col gap-4">
+              <h3 className="text-xl font-bold text-slate-900">Informasi Kontak &amp; Alamat</h3>
+              {LOCATIONS.map((l, i) => (
+                <button key={l.name} onClick={() => setLoc(i)}
+                  className={`text-left flex gap-4 p-4 rounded-2xl border transition-all ${loc === i ? 'border-amber-500 bg-white shadow-md' : 'border-slate-200 bg-white/60 hover:bg-white'}`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${loc === i ? 'bg-amber-500 text-slate-950' : 'bg-amber-500/10 text-amber-600'}`}><MapPin className="w-5 h-5" /></div>
+                  <div><h4 className="font-bold text-sm text-slate-900">{l.name}</h4><p className="text-slate-600 text-sm">{l.address}</p></div>
+                </button>
+              ))}
+              <div className="flex gap-4 p-4">
+                <div className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0"><Phone className="w-5 h-5" /></div>
+                <div><h4 className="font-bold text-sm">Telepon / WhatsApp</h4>
+                  <a href={`tel:+${PHONE_NUMBER}`} className="text-emerald-700 font-bold hover:underline block">{PHONE_DISPLAY}</a></div>
               </div>
-              <a href={GOOGLE_MAPS_LINK} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl shadow">
-                <ExternalLink className="w-4 h-4" />Buka Petunjuk Arah Google Maps
+              <a href={mapRoute(LOCATIONS[loc].address)} target="_blank" rel="noopener noreferrer"
+                className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl shadow">
+                <ExternalLink className="w-4 h-4" />Petunjuk Arah ke {LOCATIONS[loc].name.split('·')[1].trim()}
               </a>
             </div>
-            <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-200 shadow-md min-h-[380px] bg-slate-100">
-              <iframe title="Lokasi Aldo Rent Car" src={MAP_EMBED_URL} className="w-full h-full min-h-[380px] border-0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-200 shadow-md min-h-[420px] bg-slate-100">
+              <iframe key={loc} title={LOCATIONS[loc].name} src={mapEmbed(LOCATIONS[loc].address)}
+                className="w-full h-full min-h-[420px] border-0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
           </div>
         </div>
@@ -399,7 +412,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
-              <div className="flex items-center gap-3"><Logo size="h-10" /><div className="font-extrabold text-lg text-white">ALDO RENT CAR <span className="text-amber-400">&amp; TOUR</span></div></div>
+              <div className="flex items-center gap-3"><Logo size="h-10" /><div className="font-extrabold text-lg text-white">ALDHO RENT CAR <span className="text-amber-400">&amp; TOUR</span></div></div>
               <p className="text-sm max-w-sm">Penyedia jasa rental mobil di Silangit &amp; sekitarnya.</p>
             </div>
             <div>
@@ -412,13 +425,13 @@ export default function App() {
               <a href={`tel:+${PHONE_NUMBER}`} className="text-amber-400 font-bold text-sm hover:underline">{PHONE_DISPLAY}</a>
             </div>
           </div>
-          <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500">&copy; {new Date().getFullYear()} Aldo Rent Car (ARC Travel &amp; Tour). All rights reserved.</div>
+          <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500">&copy; {new Date().getFullYear()} Aldho Rent Car (ARC Travel &amp; Tour). All rights reserved.</div>
         </div>
       </footer>
 
       {/* MOBILE WA BAR */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 z-50 shadow-2xl flex items-center justify-between gap-3">
-        <div><span className="text-[10px] uppercase font-bold text-slate-500 block">Sewa Mobil</span><span className="text-xs font-black text-slate-900">Aldo Rent Car (ARC)</span></div>
+        <div><span className="text-[10px] uppercase font-bold text-slate-500 block">Sewa Mobil</span><span className="text-xs font-black text-slate-900">Aldho Rent Car (ARC)</span></div>
         <a href={genericWa} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 text-white font-bold text-sm py-2.5 px-4 rounded-xl shadow">
           <MessageCircle className="w-4 h-4 fill-current" />Chat WA
         </a>
