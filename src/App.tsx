@@ -13,14 +13,24 @@ interface CarUnit {
 
 const PHONE_NUMBER = '6282272055155';
 const PHONE_DISPLAY = '0822-7205-5155';
-const ADDRESS = 'Jl. PK Hepata No. 4, Simpang Sirongit';
-const MAP_QUERY = encodeURIComponent('Jl. Pk Hepata No. 4 Simpang Sirongit, Tapanuli Utara');
+const ADDRESS = 'Jl. Hepata, Pardomuan Nauli, Kec. Laguboti, Kabupaten Toba, Sumatera Utara 22381';
+
 const LOCATIONS = [
-  { name: 'Lokasi 1 · Laguboti', address: '945M+Q79, Ompu Raja Hutapea, Kec. Laguboti, Kabupaten Toba, Sumatera Utara 22381' },
-  { name: 'Lokasi 2 · Silando', address: '7X7Q+628 Silando, Kabupaten Tapanuli Utara, Sumatera Utara' },
+  {
+    name: 'Lokasi 1 · Laguboti',
+    address: 'Jl. Hepata, Pardomuan Nauli, Kec. Laguboti, Kabupaten Toba, Sumatera Utara 22381',
+    coords: '2.3594872,99.1331263',
+    embed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.4357118500334!2d99.1331263!3d2.3594872000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x302e01efd3faffb5%3A0x59ee944ca887656e!2sAldho%20Rental%20Car!5e0!3m2!1sid!2sid!4v1794534377691!5m2!1sid!2sid',
+  },
+  {
+    name: 'Lokasi 2 · Silangit',
+    address: 'Area Parkir, Jl. Bandara Silangit, Silando, Kec. Muara, Kabupaten Tapanuli Utara, Sumatera Utara 22476',
+    coords: '2.2631103,98.9876165',
+    embed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.706368715232!2d98.9876165!3d2.2631102999999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x302e11d386e0c9e5%3A0xc1c05d72db67cade!2sAldho%20Rental%20Car!5e0!3m2!1sid!2sid!4v1794534417583!5m2!1sid!2sid',
+  },
 ];
-const mapEmbed = (a: string) => `https://www.google.com/maps?q=${encodeURIComponent(a)}&output=embed`;
-const mapRoute = (a: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(a)}`;
+
+const mapRoute = (coords: string) => `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
 const LOGO = '/images/logo.jpg';
 
 // Harga dalam rupiah per hari. Ubah di sini jika ada perubahan tarif.
@@ -41,7 +51,7 @@ const FLEET: CarUnit[] = [
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
   {
-    id: 'rush', name: 'Daihatsu Terios', category: 'premium', image: '/images/sigra.jpg', pos: '50% 60%',
+    id: 'terios', name: 'Daihatsu Terios', category: 'premium', image: '/images/sigra.jpg', pos: '50% 60%',
     capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000,
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
@@ -114,9 +124,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-400 selection:text-slate-900 pb-20 md:pb-0">
-      {/* TOP BAR */}
-
-
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -354,7 +361,6 @@ export default function App() {
       </section>
 
       {/* LOKASI */}
-      {/* LOKASI */}
       <section id="lokasi" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -377,13 +383,13 @@ export default function App() {
                 <div><h4 className="font-bold text-sm">Telepon / WhatsApp</h4>
                   <a href={`tel:+${PHONE_NUMBER}`} className="text-emerald-700 font-bold hover:underline block">{PHONE_DISPLAY}</a></div>
               </div>
-              <a href={mapRoute(LOCATIONS[loc].address)} target="_blank" rel="noopener noreferrer"
+              <a href={mapRoute(LOCATIONS[loc].coords)} target="_blank" rel="noopener noreferrer"
                 className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl shadow">
                 <ExternalLink className="w-4 h-4" />Petunjuk Arah ke {LOCATIONS[loc].name.split('·')[1].trim()}
               </a>
             </div>
             <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-200 shadow-md min-h-[420px] bg-slate-100">
-              <iframe key={loc} title={LOCATIONS[loc].name} src={mapEmbed(LOCATIONS[loc].address)}
+              <iframe key={loc} title={LOCATIONS[loc].name} src={LOCATIONS[loc].embed}
                 className="w-full h-full min-h-[420px] border-0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
           </div>
