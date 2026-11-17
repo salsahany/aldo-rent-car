@@ -3,6 +3,8 @@ import {
   Phone, MapPin, Clock, Car, UserCheck, ShieldCheck, Compass, CheckCircle2, Users, Fuel,
   Settings, Menu, X, ExternalLink, MessageCircle, HelpCircle, Sparkles, ArrowRight,
 } from 'lucide-react';
+import GoogleReviews from './GoogleReviews';
+import BankAccounts from './components/BankAccounts';
 
 interface CarUnit {
   id: string; name: string; category: 'family' | 'premium' | 'group';
@@ -42,12 +44,12 @@ const FLEET: CarUnit[] = [
   },
   {
     id: 'avanza', name: 'Avanza Veloz', category: 'family', image: '/images/avanza.jpeg', pos: '50% 30%',
-    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000, popular: true,
+    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 350000, popular: true,
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
   {
     id: 'rush', name: 'Toyota Rush', category: 'premium', image: '/images/rush.jpg', pos: '50% 40%',
-    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 300000,
+    capacity: 7, transmission: 'Manual / Matic', fuel: 'Bensin', priceDriver: 500000, priceSelfDrive: 350000,
     features: ['Irit BBM', 'Ideal Keluarga', 'Mudah Dikemudikan', 'Harga Bersahabat']
   },
   {
@@ -79,7 +81,7 @@ const waLink = (m: string) => `https://wa.me/${PHONE_NUMBER}?text=${encodeURICom
 const inputCls = 'w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-sm outline-none bg-white transition-all';
 const labelCls = 'block text-xs font-semibold text-slate-700 uppercase mb-1';
 
-const NAV = [['#armada', 'Armada Kami'], ['#layanan', 'Layanan Utama'], ['#keunggulan', 'Keunggulan & Rute'], ['#estimasi', 'Hitung Harga'], ['#lokasi', 'Lokasi & Kontak']];
+const NAV = [['#armada', 'Armada Kami'], ['#layanan', 'Layanan Utama'], ['#keunggulan', 'Keunggulan & Rute'], ['#estimasi', 'Hitung Harga'], ['#lokasi', 'Lokasi & Kontak'], ['#ulasan', 'Ulasan']];
 
 const SERVICES = [
   { icon: Car, t: 'Sewa Mobil + Driver', d: 'Perjalanan santai tanpa lelah dengan sopir lokal yang paham rute.', l: ['Tepat waktu & sopan', 'Bebas stres navigasi'] },
@@ -360,6 +362,9 @@ export default function App() {
         </div>
       </section>
 
+      {/* REKENING PEMBAYARAN */}
+      <BankAccounts />
+
       {/* LOKASI */}
       <section id="lokasi" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -412,6 +417,9 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* GOOGLE REVIEWS */}
+      <GoogleReviews />
 
       {/* FOOTER */}
       <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
