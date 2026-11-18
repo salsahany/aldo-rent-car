@@ -91,7 +91,7 @@ const SERVICES = [
 ];
 
 function Logo({ size = 'h-12' }: { size?: string }) {
-  return <img src={LOGO} alt="ARC Travel and Tour" className={`${size} w-auto rounded-xl bg-white p-0.5 shadow-md object-contain`} />;
+  return <img src={LOGO} alt="Aldho Rent Car – Rental Mobil Silangit, ARC Travel and Tour" className={`${size} w-auto rounded-xl bg-white p-0.5 shadow-md object-contain`} />;
 }
 
 function CarPhoto({ car }: { car: CarUnit }) {
@@ -103,7 +103,7 @@ function CarPhoto({ car }: { car: CarUnit }) {
     );
   return (
     <div className="w-full h-full overflow-hidden">
-      <img src={car.image} alt={car.name} loading="lazy" className="w-full h-full object-cover"
+      <img src={car.image} alt={`Sewa ${car.name} di Silangit – Rental Mobil ${car.name} Bandara Silangit`} loading="lazy" className="w-full h-full object-cover"
         style={{ objectPosition: car.pos, transform: car.zoom ? `scale(${car.zoom})` : undefined, transformOrigin: car.pos?.split(' ').join(' ') }} />
     </div>
   );
@@ -159,7 +159,7 @@ export default function App() {
 
       {/* HERO */}
       <section className="relative bg-slate-900 text-white overflow-hidden">
-        <img src="/images/hiace-2.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
+        <img src="/images/hiace-2.jpg" alt="Rental mobil HiAce di Bandara Silangit – Aldho Rent Car" className="absolute inset-0 w-full h-full object-cover opacity-30" style={{ objectPosition: '50% 65%' }} />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-900/60 z-10" />
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -168,7 +168,7 @@ export default function App() {
                 <Sparkles className="w-3.5 h-3.5" />Rental Mobil &amp; Tour · Silangit
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
-                Sewa Mobil Aman, Nyaman &amp; Terpercaya Bersama <span className="text-amber-400">Aldho Rent Car</span>
+                Rental Mobil Silangit – Sewa Mobil di <span className="text-amber-400">Bandara Silangit</span> &amp; Danau Toba
               </h1>
               <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
                 Solusi transportasi di Silangit &amp; sekitarnya. Pilih Lepas Kunci atau dengan Sopir untuk wisata Danau Toba, urusan dinas, hingga acara keluarga.
@@ -222,8 +222,8 @@ export default function App() {
       <section id="armada" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="text-amber-600 font-bold text-sm tracking-widest uppercase mb-1">Pilihan Terbaik</div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Pilihan Armada Kami</h2>
-          <p className="mt-3 text-slate-600">Dari mobil keluarga sampai van rombongan, semua siap menemani perjalanan Anda.</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Armada Rental Mobil Silangit</h2>
+          <p className="mt-3 text-slate-600">Pilihan armada sewa mobil di Bandara Silangit – dari mobil keluarga sampai van rombongan, semua siap menemani perjalanan Anda di Danau Toba.</p>
           <div className="flex flex-wrap justify-center gap-2 mt-8">
             {[['all', 'Semua Mobil'], ['family', 'Keluarga / MPV'], ['premium', 'Premium'], ['group', 'Rombongan / HiAce']].map(([id, l]) => (
               <button key={id} onClick={() => setCat(id)}
@@ -279,7 +279,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="text-amber-400 font-bold text-sm tracking-widest uppercase mb-1">Layanan Lengkap</div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Solusi Perjalanan Tanpa Repot</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Layanan Rental Mobil Silangit – Solusi Perjalanan Tanpa Repot</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {SERVICES.map(({ icon: I, t, d, l }) => (
@@ -299,8 +299,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 space-y-6">
             <div className="text-amber-600 font-bold text-sm tracking-widest uppercase">Keunggulan Utama</div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Mengapa Memilih Aldho Rent Car?</h2>
-            <p className="text-slate-600">Kami berkomitmen memberikan layanan sewa kendaraan yang jujur dan mengutamakan kenyamanan pelanggan.</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Mengapa Memilih Aldho Rent Car Silangit?</h2>
+            <p className="text-slate-600">Kami berkomitmen memberikan layanan sewa kendaraan di Silangit dan Danau Toba yang jujur dan mengutamakan kenyamanan pelanggan.</p>
             {[[ShieldCheck, 'Unit Terawat & Bersih', 'Kendaraan dicek dan dibersihkan sebelum diserahkan.'],
             [UserCheck, 'Driver Ramah & Paham Rute', 'Sopir lokal yang hafal jalur Toba, Samosir, hingga Sibolga.'],
             [Sparkles, 'Harga Jelas', 'Tarif disepakati di awal, tanpa biaya yang mengejutkan.']].map(([I, t, d]) => {
@@ -314,8 +314,8 @@ export default function App() {
             })}
           </div>
           <div className="lg:col-span-7 bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-2xl">
-            <h3 className="text-2xl font-bold mb-1">Tarif Antar Per Mobil</h3>
-            <p className="text-slate-400 text-sm mb-6">Dengan sopir, dari Silangit. Harga per mobil, bukan per orang.</p>
+            <h3 className="text-2xl font-bold mb-1">Tarif Antar dari Bandara Silangit Per Mobil</h3>
+            <p className="text-slate-400 text-sm mb-6">Harga sewa mobil dengan sopir dari Bandara Silangit ke berbagai tujuan wisata. Harga per mobil, bukan per orang.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {ROUTES.map(([r, p]) => (
                 <div key={r} className="bg-slate-800/80 border border-slate-700/80 px-4 py-3 rounded-xl flex justify-between items-center text-sm">
@@ -370,7 +370,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="text-amber-600 font-bold text-sm tracking-widest uppercase mb-1">Lokasi Kami</div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Temukan Kami di Peta</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Lokasi Aldho Rent Car – Rental Mobil Silangit</h2>
             <p className="mt-2 text-slate-600">Pilih lokasi untuk melihat titiknya di peta.</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -404,11 +404,13 @@ export default function App() {
       {/* FAQ */}
       <section className="py-16 bg-slate-50 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center mb-10">Pertanyaan Sering Diajukan</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center mb-10">FAQ – Pertanyaan Seputar Rental Mobil Silangit</h2>
           <div className="space-y-4">
-            {[['Apa syarat sewa mobil lepas kunci?', 'Hubungi kami via WhatsApp untuk syarat dan proses verifikasi yang berlaku.'],
-            ['Apakah harga sewa dengan sopir sudah termasuk BBM?', 'Paket All-In (HiAce dan Fortuner) sudah termasuk mobil, sopir, dan BBM. Untuk mobil lain, BBM mengikuti kesepakatan saat booking.'],
-            ['Bisakah dijemput di Bandara Silangit?', 'Bisa. Kabari jadwal penerbangan Anda lewat WhatsApp.']].map(([q, a]) => (
+            {[['Apa syarat sewa mobil lepas kunci di Silangit?', 'Hubungi kami via WhatsApp di 0822-7205-5155 untuk syarat dan proses verifikasi yang berlaku. Dokumen yang umumnya diperlukan: KTP, SIM A, dan tiket pesawat PP.'],
+            ['Apakah harga sewa mobil di Silangit sudah termasuk BBM?', 'Paket All-In (HiAce Rp 1.500.000/hari dan Fortuner Rp 1.400.000/hari) sudah termasuk mobil, sopir, dan BBM. Untuk mobil lain, BBM mengikuti kesepakatan saat booking.'],
+            ['Bisakah dijemput di Bandara Silangit?', 'Bisa. Aldho Rent Car menyediakan layanan antar-jemput di Bandara Internasional Silangit (Sisingamangaraja XII). Kabari jadwal penerbangan Anda lewat WhatsApp.'],
+            ['Berapa harga rental mobil dari Silangit ke Parapat?', 'Tarif antar dari Bandara Silangit ke Parapat adalah Rp 500.000 per mobil (dengan sopir). Tersedia armada Avanza, Innova, Rush, Terios, Fortuner, dan HiAce.'],
+            ['Apa saja rute yang dilayani dari Bandara Silangit?', 'Rute meliputi: Silangit–Balige (Rp 200.000), Silangit–Porsea (Rp 250.000), Silangit–Tarutung (Rp 250.000), Silangit–Parapat (Rp 500.000), Silangit–Samosir (Rp 600.000), Silangit–Sibolga (Rp 700.000), dan Silangit–Sidempuan (Rp 800.000).']].map(([q, a]) => (
               <div key={q} className="bg-white p-5 rounded-2xl border border-slate-200">
                 <h4 className="font-bold text-slate-900 flex items-center gap-2"><HelpCircle className="w-4 h-4 text-amber-500" />{q}</h4>
                 <p className="text-slate-600 text-sm mt-2 pl-6">{a}</p>
@@ -427,7 +429,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center gap-3"><Logo size="h-10" /><div className="font-extrabold text-lg text-white">ALDHO RENT CAR <span className="text-amber-400">&amp; TOUR</span></div></div>
-              <p className="text-sm max-w-sm">Penyedia jasa rental mobil di Silangit &amp; sekitarnya.</p>
+              <p className="text-sm max-w-sm">Penyedia jasa rental mobil terpercaya di Bandara Silangit, Laguboti, Balige &amp; sekitarnya. Layanan sewa mobil lepas kunci, dengan sopir, antar-jemput bandara, dan paket tour wisata Danau Toba.</p>
             </div>
             <div>
               <h4 className="text-white font-bold text-sm mb-4">Navigasi Cepat</h4>
